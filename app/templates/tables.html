@@ -1,0 +1,15 @@
+<table border="1">
+    <tr>
+        <th>field1</th>
+        <th>field2</th>
+        <th>date_field</th>
+    </tr>
+    {% for row in data %}
+    <tr>
+        <td>{{ row['field1'] }}</td>
+        <td>{{ row['field2'] }}</td>
+        <td>{{ row['date_field'] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+

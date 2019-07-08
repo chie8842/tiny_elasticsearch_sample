@@ -1,0 +1,7 @@
+{
+  "query": {
+    "query_string": {
+      "query": "field1.ja_default:\"{{ word }}\"^100 OR field1.ja_ngram:\"{ word }\"^10"
+    }
+  }
+}

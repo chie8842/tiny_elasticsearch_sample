@@ -1,0 +1,30 @@
+version: '3.3'
+services:
+  elasticsearch:
+    image: sample_search_prod:latest
+    ports:
+      - "9200:9200"
+    expose:
+      - 9200
+      - 9300
+    volumes:
+      - ${PWD}:/work
+      - ${PWD}/elasticsearch_configs:/etc/elasticsearch
+    environment:
+      - ENVIRONMENT=${ENVIRONMENT}
+      - QUEUERY_TOKEN=${QUEUERY_TOKEN}
+      - QUEUERY_TOKEN_SECRET=${QUEUERY_TOKEN_SECRET}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+    command: /bin/bash /work/bin/start_app.sh
+  app:
+    image: sample_search:latest
+    ports:
+      - "8888:8888"
+    volumes:
+      - ${PWD}/app:/work
+    links:
+      - elasticsearch:elasticsearch
+    command: bash -c "python3 -m app"
+volumes:
+  es-data:

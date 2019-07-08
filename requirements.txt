@@ -1,0 +1,17 @@
+awscli
+boto3
+pandas
+psycopg2
+SQLAlchemy
+sqlalchemy-redshift
+tqdm
+numpy
+scipy
+ipython-sql==0.3.5
+jupyter
+mecab-python3
+joblib
+matplotlib
+flask
+elasticsearch
+mldatautils

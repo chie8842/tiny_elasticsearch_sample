@@ -1,0 +1,89 @@
+{
+  "index_patterns": ["samples*"],
+  "settings": {
+    "number_of_shards": "3",
+    "analysis": {
+      "filter": {
+        "synonym": {
+          "type": "synonym",
+          "synonyms_path": "synonym.txt"
+        }
+      },
+      "tokenizer": {
+        "kuromoji_user_dict": {
+          "type": "kuromoji_ipadic_neologd_tokenizer",
+          "mode": "search",
+          "discard_punctuation": "true",
+          "user_dictionary": "userdict_ja.txt"
+        },
+        "ngram_default": {
+          "type": "nGram",
+          "min_gram": "2",
+          "max_gram": "3",
+          "token_chars": ["letter", "digit"]
+        }
+      },
+      "analyzer": {
+        "ja_default": {
+          "type": "custom",
+          "tokenizer": "kuromoji_user_dict",
+          "char_filter": ["kuromoji_iteration_mark"],
+          "filter": [
+            "lowercase",
+            "cjk_width",
+            "kuromoji_baseform",
+            "kuromoji_part_of_speech"
+          ]
+        },
+        "ja_synonym": {
+          "type": "custom",
+          "tokenizer": "kuromoji_user_dict",
+          "char_filter": ["kuromoji_iteration_mark"],
+          "filter": [
+            "lowercase",
+            "cjk_width",
+            "kuromoji_baseform",
+            "kuromoji_part_of_speech",
+            "synonym"
+          ]
+        },
+        "ja_ngram": {
+          "type": "custom",
+          "tokenizer": "ngram_default",
+          "filter": [
+            "lowercase",
+            "cjk_width"
+          ]
+        }
+      }
+    }
+  },
+
+  "mappings": {
+    "_source": {
+      "enabled": true
+    },
+    "properties": {
+      "field1": {
+        "type": "text",
+        "fields": {
+          "ja_default": {
+            "type": "text",
+            "analyzer": "ja_default"
+          },
+          "ja_synonym": {
+            "type": "text",
+            "analyzer": "ja_synonym"
+          },
+          "ja_ngram": {
+            "type": "text",
+            "analyzer": "ja_ngram"
+          }
+        }
+      },
+      "field2": {"type": "integer"},
+      "date_field": {"type": "date"}
+    }
+  },
+  "version": 1
+}
