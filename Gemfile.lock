@@ -45,7 +45,7 @@ GEM
     httpclient (2.8.3)
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
-    jmespath (1.4.0)
+    jmespath (1.6.1)
     link_header (0.0.8)
     minitest (5.11.3)
     multi_json (1.13.1)
